@@ -1,3 +1,35 @@
 # Grade Prediction API
 
-This site will serve as a techblog for the development of a our grade prediction AI.
+This site will serve as a techblog for the development of our grade prediction AI.
+
+### Team ShallowMind members:
+
+Cédric Chauvet, Department of Information Systems, Hanyang University \
+Zachary Frank, Department of Computer Science, Hanyang University \
+Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
+
+## Introduction:
+
+
+
+## Dataset:
+
+
+
+
+## Methodology:
+
+
+
+
+## Evaluation and Analysis:
+
+
+## Related Work:
+
+
+
+## Conclusion:
+
+
+
