@@ -28,6 +28,8 @@ To be able to use this dataset with our neural network we have to do two things;
 
 To be left with the useful columns, we do this:
 ![Image of code](https://github.com/cedchauv/Grade-Prediction-API/blob/gh-pages/images/training.JPG)
+<img src="images/training.JPG" alt="code" class="inline"/>
+
 
 
 To replace string values with integer values, we do this:
