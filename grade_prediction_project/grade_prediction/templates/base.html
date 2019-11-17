@@ -1,0 +1,26 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'grade_prediction/style.css' %}">
+</head>
+<title>Django</title>
+<body class="home">
+<div class="sidenav">
+        <a href={% url 'home' %}>Home</a>
+        {% if not user.is_authenticated %}
+        <a href={% url 'login' %}>Login</a>
+        <a href={% url 'signup' %}>Signup</a>
+        {% else %}
+        <a href={% url 'profile' %}>Profile</a>
+        <a href={% url 'class_search' %}>Class Search</a>
+        <a href={% url 'advisor' %}>Advisor</a>
+        <a href={% url 'logout' %}>Logout</a>
+        {% endif %}
+        <a href={% url 'admin:index' %}>Admin</a>
+    </div>
+<div class="fade_in">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

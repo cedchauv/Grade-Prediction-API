@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<form id="login-form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table class="login">
+        <tr>
+            <td>
+                <label for="id_username">Username</label><br>
+                <input id="id_username" name="username" type="text" class="form-control">
+
+                <label for="id_password">Password</label><br>
+                <input id="id_password" name="password" type="password" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Login" class="btn_login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </td>
+        </tr>
+    </table>
+    <input class="btn_google_login" type="button" onclick="window.location.href = '{% url 'social:begin' 'google-oauth2' %}?next=/';" value="Sign in with Google"/>
+    {% if form.errors %}
+        <p class=" label label-danger">
+            Your username and password didn't match.
+            Please try again.
+        </p>
+    {% endif %}
+</form>
+{% endblock %}
