@@ -26,15 +26,15 @@ The dataset contains 33 different variable columns, detailed below. Not all of t
 
 To be able to use this dataset with our neural network we have to do two things; Remove unnecessary columns, and replace non-integer values with binary integer values.
 
-To be left with the useful columns, we do this:
-![Image of code](https://github.com/cedchauv/Grade-Prediction-API/blob/gh-pages/images/training.JPG)
+To be left with the useful columns, we run this code:
 <img src="images/training.JPG" alt="code" class="inline"/>
 
 
 
-To replace string values with integer values, we do this:
-![Image of code](https://github.com/cedchauv/Grade-Prediction-API/blob/gh-pages/images/replace.JPG)
+To replace string values with integer values, we run this:
+<img src="images/replace.JPG" alt="code" class="inline"/>
 
+These two together leaves us with a 'processed-tdata.csv' file that we can load with numpy!
 
 ## Methodology:
 
