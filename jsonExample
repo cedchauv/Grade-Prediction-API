@@ -1,0 +1,23 @@
+{
+    "userId": "3",
+    "userName": "Zach",
+    "userType": "STUDENT",
+    "studentProfile": {
+        "userId": null,
+        "sex": "M",
+        "age": 22,
+        "addressType": "U",
+        "travelTime": 1,
+        "studyTime": 3,
+        "failures": 0,
+        "activities": false,
+        "internet": true,
+        "romance": false,
+        "goOut": 2,
+        "educationalSupport": false,
+        "weekdayAlcoholConsumption": 2,
+        "weekendAlcoholConsumption": 2,
+        "health": 4
+    },
+    "courses": []
+}
