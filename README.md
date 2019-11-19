@@ -11,3 +11,13 @@ https://docs.google.com/presentation/d/1_fXDUQe1VEVgT1Ng1V6unVKVLkN7J9GCC0oaGHiK
 
 Database Repository
 https://github.com/frunkles/Grade-API-Database
+
+Python must-have interpreter settings:
+
+Python 3.6   
+Keras  
+numpy  
+pandas  
+matplotlib  
+Django  
+tensorflow  
