@@ -3,26 +3,45 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 
-dataset = np.loadtxt('processed-tdata2.csv', delimiter=',',skiprows=1)
-x = dataset[:-10,0:15]
-y = dataset[:-10,15]
+dataset = np.loadtxt('./csv/complete-processed.csv', delimiter=',',skiprows=1)
+split = 130
+#15 reduced, 32 complete
+variables = 32
 
+x = dataset[:-split,0:variables]
+y = dataset[:-split,variables]
+#def baseline_model():
 model = Sequential()
-model.add(Dense(25,input_dim = 15, activation='relu'))
-model.add(Dense(75,activation='relu'))
+model.add(Dense(25,input_dim = variables,kernel_initializer='normal', activation='relu'))
+model.add(Dense(55,activation='relu'))
 model.add(Dense(125,activation='relu'))
-model.add(Dense(50,activation='relu'))
-model.add(Dense(1,activation='relu'))
+model.add(Dense(70,activation='relu'))
+#model.add(Dense(40,activation='relu'))
+model.add(Dense(40,activation='relu'))
 
-model.compile(loss='mean_square_logarithmic_error',optimizer='adam',metrics=['accuracy'])
 
-model.fit(x, y, epochs=1200, batch_size=5)
+model.add(Dense(1, activation='linear'))
+
+model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
+
+model.fit(x, y, epochs=750,batch_size=5)
+model.save('predictormodelComplete.h5')
+
+a = dataset[-split:,0:variables]
+b = dataset[-split:,variables]
+
+predictions = model.predict(a)
+error = 0
+for i in range(len(predictions)):
+    print(predictions[i].round(), dataset[-(split-i), variables])
+    error += abs(predictions[i].round() - dataset[-(split-i),variables])
+
+error = error / split
 
 _, accuracy = model.evaluate(x, y)
 print('Accuracy: %.2f' % (accuracy*100))
 
-predictions = model.predict(dataset[-10:, 0:15])
-for i in range(len(predictions)):
-    print(predictions[i], dataset[-(10-i), 15])
-
-
+_, accuracy = model.evaluate(a, b)
+print('Pinpoint Accuracy: %.2f' % (accuracy*split), '/', split)
+print('Percentage accuracy: %.2f' % (accuracy*100))
+print("Average error %.2f" % error)
