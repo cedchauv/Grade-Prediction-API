@@ -19,18 +19,24 @@ class GradePredictor:
     def predict_csv(self, student_csv):
         return self.model.predict(np.loadtxt(student_csv, delimiter=',', skiprows=1))
 
-    def predict_json(self, student_json, studentamount, variables):
-        with open('jsonExample.json') as f:
+    def json_convert(self, jsonobject):
+        with open(jsonobject) as f:
                 data = json.load(f)
-        #npayy = np.empty(shape=(studentamount,variables))
-#        for x in data:
-            #npayy[x] += data[x]
-            #s = str(data[x])
-       # ayy = np.array([[v for _,v in sorted(d["sex"].items())] for d in data] )
+        data = data["studentProfile"]
+        data.pop("userId")
         print(data)
+        for x, y  in data.items():
+            if y == 'M' or  y == 'R' or y == True:
+                data[x] = 1
+            elif y == 'F' or y == 'U' or y == False:
+                data[x] = 0
+        numpy = np.fromiter(data.values(), dtype=float)
+        numpy = np.append(numpy, 1)
+        numpy = np.asmatrix(numpy)
+        return numpy
 
-        #print(ayy)
-        #return self.model.predict(np.asarray(data))
+    def predict_json(self, student_json):
+        return self.model.predict(self.json_convert(student_json))
 
     def evaluate_csv(self, student_csv, variables):
         dataset = np.loadtxt(student_csv, delimiter=',', skiprows=1)
