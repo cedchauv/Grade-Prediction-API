@@ -18,8 +18,7 @@ We will train two models, one using the complete dataset to achieve high accurac
 
 
 ## Dataset:
-The dataset being used to train the neural network to predict grades is ta portugese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portugese-language students.
-https://www.kaggle.com/uciml/student-alcohol-consumption
+The [dataset](https://www.kaggle.com/uciml/student-alcohol-consumption) being used to train the neural network to predict grades is a portugese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portugese-language students.
 
 The dataset contains 33 different variable columns, detailed below. Not all of these are useful for our project though, since they cant be applied to higher education or outside of the dataset. The useful columns are in bold and the ones to be removed are in italics.<br/> 
 *school - student's school (binary: 'GP' - Gabriel Pereira or 'MS' - Mousinho da Silveira)<br/>* 
@@ -77,12 +76,12 @@ These two together leaves us with a 'processed-tdata.csv' file that we can load 
 
 
 ## Related Work:
-The dataset we are using for this project is attached to the research paper "Using Data Mining to Predict Secondary School Student Performance", where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
+The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
 They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model, but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output.
 
 This project makes use of multiple frameworks and libraries. For the AI-portion of the project we are using Keras/Tensorflor/Numpy as our required backbone and Pandas/Pyplot for our data processing and analyzing. For the non-ai portion we make use of the Django Framework for building our web-service and MySQL for the database. 
 
-To get an initial grasp on our dataset and it's variables, we read this kaggle-blog https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning
+To get an initial grasp on our dataset and it's variables, we read this [kaggle-blog](https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning)
 Do note that this blog is about the math course, while we base our solution on the portugese one since it is the bigger dataset. 
 
 We made heavy use of the keras documentation, accessible at https://keras.io/, and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
