@@ -9,12 +9,17 @@ Zachary Frank, Department of Computer Science, Hanyang University<br/>
 Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
 
 ## Introduction:
+As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
+
+In the end, we want to have a trained ai model, capable of producing accurate predictions based on the variables input into the ai. We want these predictions to be accessible through a web-service connected to a database. We also want functions for the continued training of the ai from user-input, such as transcripts and student results/variables. Our main model will be a neural network utilizing Keras. 
+
+We will train two models, one using the complete dataset to achieve high accuracy, and one using the reduced dataset (detailed below) since the complete dataset doesn't fit our service (some variables are unavailable for our proposed users).
 
 
 
 ## Dataset:
-The dataset being used to train the neural network to predict grades is ta portugese survey-based grade dataset where grades and multiple variables are reported for 386 students.
-https://www.kaggle.com/dipam7/student-grade-prediction
+The dataset being used to train the neural network to predict grades is ta portugese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portugese-language students.
+https://www.kaggle.com/uciml/student-alcohol-consumption
 
 The dataset contains 33 different variable columns, detailed below. Not all of these are useful for our project though, since they cant be applied to higher education or outside of the dataset. The useful columns are in bold and the ones to be removed are in italics.<br/> 
 *school - student's school (binary: 'GP' - Gabriel Pereira or 'MS' - Mousinho da Silveira)<br/>* 
@@ -72,9 +77,15 @@ These two together leaves us with a 'processed-tdata.csv' file that we can load 
 
 
 ## Related Work:
+The dataset we are using for this project is attached to the research paper "Using Data Mining to Predict Secondary School Student Performance", where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
+They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model, but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output.
 
+This project makes use of multiple frameworks and libraries. For the AI-portion of the project we are using Keras/Tensorflor/Numpy as our required backbone and Pandas/Pyplot for our data processing and analyzing. For the non-ai portion we make use of the Django Framework for building our web-service and MySQL for the database. 
 
+To get an initial grasp on our dataset and it's variables, we read this kaggle-blog https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning
+Do note that this blog is about the math course, while we base our solution on the portugese one since it is the bigger dataset. 
 
+We made heavy use of the keras documentation, accessible at https://keras.io/, and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
 ## Conclusion:
 
 
