@@ -52,7 +52,7 @@ Walc - weekend alcohol consumption (numeric: from 1 - very low to 5 - very high)
 health - current health status (numeric: from 1 - very bad to 5 - very good)<br/>** 
 *absences - number of school absences (numeric: from 0 to 93)<br/>
 G1 - first period grade (numeric: from 0 to 20)<br/>
-G2 - second period grade (numeric: from 0 to 20)*v
+G2 - second period grade (numeric: from 0 to 20)*<br/>
 **G3 - final grade (numeric: from 0 to 20, output target)**
 
 To be able to use this dataset with our neural network we have to do two things; Remove unnecessary columns, and replace non-integer values with binary integer values. 
