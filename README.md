@@ -9,5 +9,15 @@ For our project, we have decided to create an AI that predicts the grades of stu
 https://docs.google.com/presentation/d/1_fXDUQe1VEVgT1Ng1V6unVKVLkN7J9GCC0oaGHiKqHU/edit?usp=sharing
 
 
+Database Repository
+https://github.com/frunkles/Grade-API-Database
 
+Python must-have interpreter settings:
 
+Python 3.6   
+Keras  
+numpy  
+pandas  
+matplotlib  
+Django  
+tensorflow  
