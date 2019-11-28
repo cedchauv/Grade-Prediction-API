@@ -3,6 +3,7 @@ from grade_prediction.models import Profile
 from django import forms
 from grade_prediction.choices import *
 
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -16,19 +17,20 @@ class ProfileForm(forms.ModelForm):
 
 
 class StudentDataForm(forms.Form):
-    gender = forms.ChoiceField(choices=GENDER)
-    age = forms.IntegerField();
-    address = forms.CharField();
-    travel_time = forms.TimeField();
-    weekly_study_time = forms.TimeField();
-    failures = forms.IntegerField();
-    extra_curricular_activities = forms.BooleanField();
-    internet_acces_at_home = forms.BooleanField();
-    romantic_relationship = forms.BooleanField();
-    going_out_with_friends_time = forms.TimeField();
-    extra_educational_support = forms.BooleanField();
-    weekday_alcohol_consumption = forms.IntegerField();
-    weekend_day_alcohol_consumption = forms.IntegerField();
-    health = forms.IntegerField();
+    sex = forms.ChoiceField(choices=GENDER)
+    age = forms.IntegerField()
+    addressType = forms.CharField()
+    travelTime = forms.IntegerField()
+    studyTime = forms.IntegerField()
+    failures = forms.IntegerField()
+    activities = forms.BooleanField(required=False)
+    internet = forms.BooleanField(required=False)
+    romance = forms.BooleanField(required=False)
+    goOut = forms.IntegerField()
+    educationalSupport = forms.BooleanField(required=False)
+    weekdayAlcoholConsumption = forms.IntegerField()
+    weekendAlcoholConsumption = forms.IntegerField()
+    health = forms.IntegerField()
+
 
 

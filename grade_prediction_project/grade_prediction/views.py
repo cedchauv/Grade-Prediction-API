@@ -1,10 +1,14 @@
+import json
+
+import requests
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from .forms import UserForm, ProfileForm, StudentDataForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+
+from .forms import StudentDataForm
 
 
 def signup(request):
@@ -31,24 +35,34 @@ def home(request):
 @transaction.atomic
 def update_profile(request):
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        student_data_form = StudentDataForm()
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
+        student_data_form = StudentDataForm(request.POST)
+        if student_data_form.is_valid():
+            if update_student(request.user.username, student_data_form.cleaned_data) != 200:
+                add_student(request.user.username, json.dumps(student_data_form.cleaned_data))
             return HttpResponseRedirect('/')
-        else:
-            messages.error(request, _('Please correct the error below.'))
     else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-        student_data_form = StudentDataForm()
-    return render(request, 'profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form,
-        'student_data_form': student_data_form,
-    })
+        try:
+            student_data_form = StudentDataForm(initial=get_student(request.user.username)['studentProfile'])
+        except:
+            print("no profile data")
+            student_data_form = StudentDataForm()
+
+    return render(request, 'profile.html', {'student_data_form': student_data_form, })
+
+
+def get_student(username):
+    return requests.get('http://localhost:8080/users/' + username).json()
+
+
+def add_student(username, student_data_json):
+    profile = '{"userName": "' + username + '", "userType": "STUDENT", "studentProfile": ' + student_data_json + ',"courses": []}'
+    requests.post('http://localhost:8080/users/student/', json=profile)
+
+
+def update_student(username, student_data_json):
+    r = requests.patch('http://localhost:8080/users/student/' + username + "/", json=student_data_json)
+    print(r.status_code)
+    return r.status_code
 
 
 def logout(request):
