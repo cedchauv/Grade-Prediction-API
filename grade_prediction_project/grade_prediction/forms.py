@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from grade_prediction.models import Profile
+from grade_prediction_project.grade_prediction.models import Profile
 from django import forms
-from grade_prediction.choices import *
+from grade_prediction_project.grade_prediction.choices import *
 
 
 class UserForm(forms.ModelForm):

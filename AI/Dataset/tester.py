@@ -1,4 +1,4 @@
-from gradepredictor import GradePredictor
+from AI.Dataset.GradePredictor import GradePredictor
 import numpy as np
 
 model = GradePredictor('predictormodelY.h5')
