@@ -16,7 +16,6 @@ In the end, we want to have a trained ai model, capable of producing accurate pr
 We will train two models, one using the complete dataset to achieve high accuracy, and one using the reduced dataset (detailed below) since the complete dataset doesn't fit our service (some variables are unavailable for our proposed users).
 
 
-
 ## Dataset:
 The [dataset](https://www.kaggle.com/uciml/student-alcohol-consumption) being used to train the neural network to predict grades is a portugese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portugese-language students.
 
@@ -71,12 +70,25 @@ We do this two times to create a reduced-dataset for math and portugese that we 
 
 ## Methodology:
 - Explaining your choice of algorithms (methods)
+
+To provide this predictions we have chosen to use a deep neural network implenented with Keras. The neural network is trained and validatet using the dataset detailed above. It is a regression problem where the AI needs to produce a grade prediction on the scale 0-20. We are using the ReLu activation function, since it¨s a proven great choice for most neural nets. The output layer does use a linear activation functino however. We have tried both adam and rmsprop as optimizer functions and found adam to work best. For loss function we have tried: Mean absolute error, Mean Squared Error, Root Mean Squared Error and Mean Squared Logarithmic Error. We found the best result in using the mean squared error, probably because of its heavier penalization for larger errors.
+
+We also experimented a lot with node amounts, layer amounts and epochs, but found it quite hard to dial it in perfectly or even see a noticeable difference when deleteing a layer. The stochastic nature of neural networks didn't help, since rerunning the same code multiple times also gives different results. We struggled with deciding when to be satisfied with out model as well, since you can tweak forever and the best result is unknown. 
+
+
 - Explaining features or code (if any)
 
+insert pictures of keras block heeere
 
 
 ## Evaluation and Analysis:
 - Graphs, tables, any statistics (if any)
+
+To evaluate our neural net models we used multiple metrics, such as accuracy, average error and loss when preicting on the test data. 
+Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete ataset (all columns) was ~48%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with.
+
+The study (presented below) achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers, and considering their numbers for an "easier" problem we feel that our regression accuracy isnt too bad. 
+
 
 ## Related Work:
 The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
@@ -89,6 +101,5 @@ Do note that this blog is about the math course, while we base our solution on t
 
 We made heavy use of the keras documentation, accessible [here](https://keras.io), and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
 ## Conclusion:
-
 
 
