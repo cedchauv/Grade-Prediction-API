@@ -5,6 +5,9 @@
     <p>
         Press the button to predict your grade
     </p>
-    <button type="submit">Predict</button>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Predict</button>
+    </form>
 </body>
 {% endblock %}

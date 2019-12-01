@@ -82,4 +82,6 @@ def advisor(request):
 
 @login_required()
 def predict(request):
+    if request.method == 'POST':
+        print('predict stuff here')
     return render(request, 'grade_prediction/predict.html')
