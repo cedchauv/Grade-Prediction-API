@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^class_search/$', views.class_search, name='class_search'),
     url(r'^advisor/$', views.advisor, name='advisor'),
+    url(r'^predict/$', views.predict, name='predict'),
 ]

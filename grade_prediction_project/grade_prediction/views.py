@@ -78,3 +78,8 @@ def class_search(request):
 @login_required()
 def advisor(request):
     return render(request, 'grade_prediction/advisor.html')
+
+
+@login_required()
+def predict(request):
+    return render(request, 'grade_prediction/predict.html')
