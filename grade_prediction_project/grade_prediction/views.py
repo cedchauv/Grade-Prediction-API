@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 from django.contrib.auth import login, authenticate, logout
@@ -7,8 +8,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-
+import numpy as np
 from .forms import StudentDataForm
+from keras.models import load_model
+import AI.GradeAI as GradeAI
 
 
 def signup(request):
@@ -56,7 +59,7 @@ def get_student(username):
 
 def add_student(username, student_data_json):
     profile = '{"userName": "' + username + '", "userType": "STUDENT", "studentProfile": ' + student_data_json + ',"courses": []}'
-    requests.post('http://localhost:8080/users/student/', json=profile)
+    requests.post('http://localhost:8080/users/student/', json=json.loads(profile))
 
 
 def update_student(username, student_data_json):
@@ -83,5 +86,19 @@ def advisor(request):
 @login_required()
 def predict(request):
     if request.method == 'POST':
-        print('predict stuff here')
+        data = list(get_student(request.user.username)["studentProfile"].values())
+        for i in range(len(data)):
+            if data[i] == 'M' or data[i] == 'R' or data[i] == True:
+                data[i] = 1
+            elif data[i] == 'F' or data[i] == 'U' or data[i] == False:
+                data[i] = 0
+
+        numpy = np.fromiter(data, dtype=float)
+        numpy = np.asmatrix(numpy)
+
+        model = GradeAI.get_model()
+
+        prediction = GradeAI.predict_np(model, numpy)
+        print(prediction)
+
     return render(request, 'grade_prediction/predict.html')

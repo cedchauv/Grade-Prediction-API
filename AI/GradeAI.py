@@ -5,7 +5,13 @@ import requests
 import pandas as pd
 import json
 import numpy as np
+import os
 
+def get_model():
+    dir = os.path.dirname(__file__)
+    filename = os.path.join(dir, 'model.h5')
+    model = load_model(filename)
+    return model
 
 def create_model(num_variables):
     model = Sequential()
@@ -24,7 +30,7 @@ def create_model(num_variables):
 
 def start_training_session(model, training_data, label_data, epochs, batch_size):
     model.fit(training_data, label_data, epochs=epochs, batch_size=batch_size)
-    model.save('predictormodel.h5')
+    model.save('model.h5')
 
 
 # method with numpy array input
@@ -37,3 +43,7 @@ def evaluate_dataset(model, dataset):
     labels = dataset[:,-1]
     _, accuracy = model.evaluate(data, labels)
     return accuracy
+
+
+def get_weights(model):
+    return 0
