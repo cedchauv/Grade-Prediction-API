@@ -64,7 +64,7 @@ def generate_improvement_list(student_profile, desired_grade):
         for attribute in improvements[improvement]:
             improvement_list.append([convert_index_to_attribute_name(attribute), improvement])
 
-    print(sorted(improvement_list, key=lambda element: element[1], reverse=True))
+    return sorted(improvement_list, key=lambda element: element[1], reverse=True)
 
 
 def collapse_attributes(student_profile):
