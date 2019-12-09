@@ -47,3 +47,11 @@ def evaluate_dataset(model, dataset):
 
 def get_weights(model):
     return 0
+
+def create_single_layer_model(num_variables):
+    model = Sequential()
+    model.add(Dense(1, activation='linear'))
+
+    model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
+
+    return model

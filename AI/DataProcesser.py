@@ -1,3 +1,5 @@
+import pandas as pd
+
 def generate_training_and_label_data(data, validation_data_size):
     training_data = data[:-(validation_data_size + 1), 0:-1]
     label_data = data[:-(validation_data_size + 1), -1]
