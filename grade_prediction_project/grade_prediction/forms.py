@@ -26,6 +26,7 @@ class StudentDataForm(forms.Form):
     activities = forms.BooleanField(required=False)
     internet = forms.BooleanField(required=False)
     romance = forms.BooleanField(required=False)
+    freeTime = forms.ChoiceField(choices=FREE_TIME)
     goOut = forms.ChoiceField(choices=GO_OUT)
     educationalSupport = forms.BooleanField(required=False)
     weekdayAlcoholConsumption = forms.ChoiceField(choices=WEEKDAY_ALCOHOL)

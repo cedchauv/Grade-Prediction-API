@@ -23,7 +23,14 @@ FAILURES=[
     ('1', '1'),
     ('2', '2'),
     ('3', '3'),
-    ('4', 'more then 3'),
+    ('4', 'more than 3'),
+]
+FREE_TIME=[
+    ('1', 'none'),
+    ('2', 'a little'),
+    ('3', 'some'),
+    ('4', 'plenty'),
+    ('5', 'a lot'),
 ]
 GO_OUT=[
     ('1', 'never'),
