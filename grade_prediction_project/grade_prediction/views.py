@@ -102,11 +102,17 @@ def predict(request):
         numpy = np.asmatrix(numpy)
 
         model = GradeAI.get_model()
-        numpy = np.delete(numpy, [0])
+
         prediction = GradeAI.predict_np(model, numpy)
+        improvements = Advisor.generate_improvement_list(data, 13 if prediction*5 < 65 else 17)
+        filtered_improvements = []
+        for improvement in improvements:
+            if improvement[1] != 0 and improvement[0] != "sex" and improvement[0] != "age" and improvement[0] != "failures" and improvement[0] != "schoolsup" and improvement[0] != "romantic" and improvement[0] != "health":
+                filtered_improvements.append(improvement)
+
         c['prediction'] = int(round(prediction[0][0] * 5))
-        c['improve_1'] = 'study'
-        c['improve_2'] = 'get internet'
-        c['improve_3'] = 'end your relationship'
+        c['improve_1'] = filtered_improvements[0][0]
+        c['improve_2'] = filtered_improvements[1][0]
+        c['improve_3'] = filtered_improvements[2][0]
 
     return render(request, 'grade_prediction/predict.html', c)

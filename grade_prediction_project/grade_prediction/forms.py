@@ -17,21 +17,21 @@ class ProfileForm(forms.ModelForm):
 
 
 class StudentDataForm(forms.Form):
-    sex = forms.ChoiceField(choices=GENDER)
-    age = forms.IntegerField()
-    addressType = forms.ChoiceField(choices=ADDRESS_TYPE)
-    travelTime = forms.ChoiceField(choices=TRAVEL_TIME)
-    studyTime = forms.ChoiceField(choices=STUDY_TIME)
-    failures = forms.ChoiceField(choices=FAILURES)
-    activities = forms.BooleanField(required=False)
-    internet = forms.BooleanField(required=False)
-    romance = forms.BooleanField(required=False)
-    freeTime = forms.ChoiceField(choices=FREE_TIME)
-    goOut = forms.ChoiceField(choices=GO_OUT)
-    educationalSupport = forms.BooleanField(required=False)
-    weekdayAlcoholConsumption = forms.ChoiceField(choices=WEEKDAY_ALCOHOL)
-    weekendAlcoholConsumption = forms.ChoiceField(choices=WEEKEND_ALCOHOL)
-    health = forms.ChoiceField(choices=HEALTH)
+    sex = forms.ChoiceField(choices=GENDER, label="Sex")
+    age = forms.IntegerField(label="Age")
+    addressType = forms.ChoiceField(choices=ADDRESS_TYPE, label="Address Type")
+    travelTime = forms.ChoiceField(choices=TRAVEL_TIME, label ="Travel Time to School")
+    studyTime = forms.ChoiceField(choices=STUDY_TIME, label="Study Time per Week")
+    failures = forms.ChoiceField(choices=FAILURES, label="Past Failed Courses")
+    activities = forms.BooleanField(required=False, label="Extra-Curricular Activities")
+    internet = forms.BooleanField(required=False, label="Internet Access at Home")
+    romance = forms.BooleanField(required=False, label="In a Relationship")
+    freeTime = forms.ChoiceField(choices=FREE_TIME, label="Free Time per Week")
+    goOut = forms.ChoiceField(choices=GO_OUT, label="Time Going Out per Week")
+    educationalSupport = forms.BooleanField(required=False, label="Extra Educational Support")
+    weekdayAlcoholConsumption = forms.ChoiceField(choices=WEEKDAY_ALCOHOL, label="Weekday Alcohol Consumption")
+    weekendAlcoholConsumption = forms.ChoiceField(choices=WEEKEND_ALCOHOL, label="Weekend Alcohol Consumption")
+    health = forms.ChoiceField(choices=HEALTH, label="Health")
 
 
 

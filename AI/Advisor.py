@@ -1,6 +1,7 @@
 from .Models import *
 import numpy as np
 import pandas as pd
+import AI.DataProcesser as DataProcessor
 
 class Course:
     def __init__(self):
@@ -25,7 +26,7 @@ class Transcript:
 
 
 def generate_improvement_list(student_profile, desired_grade):
-    dataset = np.loadtxt('Dataset\\processed-tdata2.csv', delimiter=',',skiprows=1)
+    dataset = DataProcessor.get_dataset()
     relevant_features = determine_attribute_weights(dataset)
     print(relevant_features)
     collapsed_student_profile = collapse_attributes(student_profile.copy())
@@ -38,6 +39,7 @@ def generate_improvement_list(student_profile, desired_grade):
 
     # determine student from list of top students that most closely matches the users profile
     least_difference_score = -1
+    closest_match = []
     for student in top_students:
         difference = 0
         collapsed_student = collapse_attributes(student.copy())
