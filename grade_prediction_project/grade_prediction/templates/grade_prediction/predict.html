@@ -2,6 +2,7 @@
 {% block content %}
 <body>
     <h1>Grade prediction</h1>
+    {% if not prediction %}
     <p>
         Press the button to predict your grade
     </p>
@@ -9,5 +10,23 @@
         {% csrf_token %}
         <button type="submit">Predict</button>
     </form>
+    {% else %}
+    <p>
+        Your predicted grade is:<br>
+    </p>
+        <div class="predict">
+        {{ prediction }}/100
+        </div>
+        <p>
+        <br><br>
+        Things to improve:
+        <br>
+        </p>
+        <div class="predict">
+            1. {{ improve_1 }}<br>
+            2. {{ improve_2 }}<br>
+            3. {{ improve_3 }}
+        </div>
+    {% endif %}
 </body>
 {% endblock %}

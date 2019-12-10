@@ -2,6 +2,8 @@ import json
 import os
 
 import requests
+from django.template import Context, Template
+from django.template.response import TemplateResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -12,6 +14,7 @@ import numpy as np
 from .forms import StudentDataForm
 from keras.models import load_model
 import AI.GradeAI as GradeAI
+import AI.Advisor as Advisor
 
 
 def signup(request):
@@ -63,6 +66,7 @@ def add_student(username, student_data_json):
 
 
 def update_student(username, student_data_json):
+    print(username, student_data_json)
     r = requests.patch('http://localhost:8080/users/student/' + username + "/", json=student_data_json)
     print(r.status_code)
     return r.status_code
@@ -85,6 +89,7 @@ def advisor(request):
 
 @login_required()
 def predict(request):
+    c = {}
     if request.method == 'POST':
         data = list(get_student(request.user.username)["studentProfile"].values())
         for i in range(len(data)):
@@ -97,8 +102,11 @@ def predict(request):
         numpy = np.asmatrix(numpy)
 
         model = GradeAI.get_model()
-
+        numpy = np.delete(numpy, [0])
         prediction = GradeAI.predict_np(model, numpy)
-        print(prediction)
+        c['prediction'] = int(round(prediction[0][0] * 5))
+        c['improve_1'] = 'study'
+        c['improve_2'] = 'get internet'
+        c['improve_3'] = 'end your relationship'
 
-    return render(request, 'grade_prediction/predict.html')
+    return render(request, 'grade_prediction/predict.html', c)

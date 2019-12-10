@@ -170,3 +170,11 @@ input[type=text].search {
   background-repeat: no-repeat;
   padding: 12px 20px 12px 40px;
 }
+div.predict {
+    font-size: 26px;
+    width:45%;
+    border:1px solid #868686;
+    padding:1em;
+    margin:0 auto;
+}
+

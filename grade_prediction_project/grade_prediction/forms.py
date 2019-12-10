@@ -19,18 +19,18 @@ class ProfileForm(forms.ModelForm):
 class StudentDataForm(forms.Form):
     sex = forms.ChoiceField(choices=GENDER)
     age = forms.IntegerField()
-    addressType = forms.CharField()
-    travelTime = forms.IntegerField()
-    studyTime = forms.IntegerField()
-    failures = forms.IntegerField()
+    addressType = forms.ChoiceField(choices=ADDRESS_TYPE)
+    travelTime = forms.ChoiceField(choices=TRAVEL_TIME)
+    studyTime = forms.ChoiceField(choices=STUDY_TIME)
+    failures = forms.ChoiceField(choices=FAILURES)
     activities = forms.BooleanField(required=False)
     internet = forms.BooleanField(required=False)
     romance = forms.BooleanField(required=False)
-    goOut = forms.IntegerField()
+    goOut = forms.ChoiceField(choices=GO_OUT)
     educationalSupport = forms.BooleanField(required=False)
-    weekdayAlcoholConsumption = forms.IntegerField()
-    weekendAlcoholConsumption = forms.IntegerField()
-    health = forms.IntegerField()
+    weekdayAlcoholConsumption = forms.ChoiceField(choices=WEEKDAY_ALCOHOL)
+    weekendAlcoholConsumption = forms.ChoiceField(choices=WEEKEND_ALCOHOL)
+    health = forms.ChoiceField(choices=HEALTH)
 
 
 
