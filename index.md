@@ -10,12 +10,12 @@ Zachary Frank, Department of Computer Science, Hanyang University<br/>
 Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
 
 ### Table of Contents
-- [Introduction:](https://cedchauv.github.io/Grade-Prediction-API/#introduction)
-- [Dataset:](https://cedchauv.github.io/Grade-Prediction-API/#dataset)
-- [Methodology:](https://cedchauv.github.io/Grade-Prediction-API/#methodology)
-- [Evaluation and Analysis:](#https://cedchauv.github.io/Grade-Prediction-API/#evaluation-and-analysis)
-- [Related Work:](https://cedchauv.github.io/Grade-Prediction-API/#related-work)
-- [Conclusion:](https://cedchauv.github.io/Grade-Prediction-API/#conclusion)
+- [Introduction](https://cedchauv.github.io/Grade-Prediction-API/#introduction)
+- [Dataset](https://cedchauv.github.io/Grade-Prediction-API/#dataset)
+- [Methodology](https://cedchauv.github.io/Grade-Prediction-API/#methodology)
+- [Evaluation and Analysis](https://cedchauv.github.io/Grade-Prediction-API/#evaluation-and-analysis)
+- [Related Work](https://cedchauv.github.io/Grade-Prediction-API/#related-work)
+- [Conclusion](https://cedchauv.github.io/Grade-Prediction-API/#conclusion)
 
 ## Introduction:
 As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
