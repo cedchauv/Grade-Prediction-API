@@ -2,11 +2,20 @@
 
 This site will serve as a techblog for the development of our grade prediction AI.
 
+
 ### Team ShallowMind members:
 
 Cédric Chauvet, Department of Information Systems, Hanyang University<br/>
 Zachary Frank, Department of Computer Science, Hanyang University<br/>
 Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
+
+### Table of Contents
+- [Introduction:](https://cedchauv.github.io/Grade-Prediction-API/#introduction)
+- [Dataset:](https://cedchauv.github.io/Grade-Prediction-API/#dataset)
+- [Methodology:](https://cedchauv.github.io/Grade-Prediction-API/#methodology)
+- [Evaluation and Analysis:](#https://cedchauv.github.io/Grade-Prediction-API/#evaluation-and-analysis)
+- [Related Work:](https://cedchauv.github.io/Grade-Prediction-API/#related-work)
+- [Conclusion:](https://cedchauv.github.io/Grade-Prediction-API/#conclusion)
 
 ## Introduction:
 As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
@@ -101,23 +110,67 @@ While analyzing the dataset and after initial model training, we realised there 
 df = df[df.G3 != 0]
 ```
 
+
+
 This leaves us with a processed dataset ready for use in our neural network!
 
 We do this two times to create a reduced-dataset for math and portugese that we use to train our webservice ai-model, and once to create a useable complete dataset file, where we don't run the code that removes columns.
 
 ## Methodology:
-- Explaining your choice of algorithms (methods)
-
 To provide this predictions we have chosen to use a deep neural network implenented with Keras. The neural network is trained and validatet using the dataset detailed above. It is a regression problem where the AI needs to produce a grade prediction on the scale 0-20. We are using the ReLu activation function, since it¨s a proven great choice for most neural nets. The output layer does use a linear activation functino however. We have tried both adam and rmsprop as optimizer functions and found adam to work best. For loss function we have tried: Mean absolute error, Mean Squared Error, Root Mean Squared Error and Mean Squared Logarithmic Error. We found the best result in using the mean squared error, probably because of its heavier penalization for larger errors.
 
-We also experimented a lot with node amounts, layer amounts and epochs, but found it quite hard to dial it in perfectly or even see a noticeable difference when deleteing a layer. The stochastic nature of neural networks didn't help, since rerunning the same code multiple times also gives different results. We struggled with deciding when to be satisfied with out model as well, since you can tweak forever and the best result is unknown. 
+We also experimented a lot with node amounts, layer amounts and epochs, but found it quite hard to dial it in perfectly or even see a noticeable difference when deleteing a layer. The stochastic nature of neural networks didn't help, since rerunning the same code multiple times also gives different results. We struggled with deciding when to be satisfied with out model as well, since you can tweak forever and the best theoretical result is unknown. 
 
+To create our Keras model, we settled on these dimensions after a lot of testing:
+```python
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
 
-- Explaining features or code (if any)
+dataset = np.loadtxt('./csv/complete-processed.csv', delimiter=',',skiprows=1)
+split = 130
+#15 reduced, 32 complete
+variables = 32
+x = dataset[:-split,0:variables]
+y = dataset[:-split,variables]
 
-insert pictures of keras block heeere
+model = Sequential()
+model.add(Dense(25,input_dim = variables,kernel_initializer='normal', activation='relu'))
+model.add(Dense(55,activation='relu'))
+model.add(Dense(125,activation='relu'))
+model.add(Dense(70,activation='relu'))
+model.add(Dense(40,activation='relu'))
+model.add(Dense(40,activation='relu'))
+model.add(Dense(1, activation='linear'))
+model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
+model.fit(x, y, epochs=720,batch_size=5)
+model.save('predictormodelComplete.h5')
+```
+As mentioned above, we make use of mean squared error as loss function and adam as our optimizer. ReLu is used as an activation function for all layers except the final output one. We found that a batch size of 5 was a good tradeoff in training speed/accuracy and that epochs of ~700 worked fine to prevent overfitting with the complete and larger dataset. We make use of the 'variables' variable due to the shifting amounts of input depending on if we fit our complete or reduced dataset. 
 
+The split variable is used to split the dataset into training and testing/validation data. Split is used over keras `validation_split=0.xx` so we can see the average error (how far off the guesses are). We test our model through this code:
+```python
+# training data accuracy
+_, accuracy = model.evaluate(x, y)
+print('Accuracy: %.2f' % (accuracy*100))
 
+a = dataset[-split:,0:variables]
+b = dataset[-split:,variables]
+
+predictions = model.predict(a)
+error = 0
+for i in range(len(predictions)):
+    print(predictions[i].round(), dataset[-(split-i), variables])
+    error += abs(predictions[i].round() - dataset[-(split-i),variables])
+
+error = error / split
+
+_, accuracy = model.evaluate(a, b)
+print('Pinpoint Accuracy: %.2f' % (accuracy*split), '/', split)
+print('Percentage accuracy: %.2f' % (accuracy*100))
+print("Average error %.2f" % error)
+```
+The predictions are made on the data saved through the earlier mentioned split variable. On our predictions we check how many we got exactly right and what percentage they make up, as well as the average error (calculated in the for loop and the directly following statement). This gives us an idea of how our model is performing. 
 ## Evaluation and Analysis:
 - Graphs, tables, any statistics (if any)
 
@@ -131,7 +184,7 @@ The study (presented below) achieved an accuracy of ~65% using the complete data
 The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
 They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model, but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output, which gives us some metrics to compare to.
 
-This project makes use of multiple frameworks and libraries. For the AI-portion of the project we are using Keras/Tensorflor/Numpy as our required backbone and Pandas/Pyplot for our data processing and analyzing. For the non-ai portion we make use of the Django Framework for building our web-service and MySQL for the database. 
+This project makes use of multiple frameworks and libraries. For the AI-portion of the project we are using Keras/Tensorflow/Numpy as our required backbone and Pandas/Pyplot for our data processing and analyzing. For the non-ai portion we make use of the Django Framework for building our web-service and MySQL for the database. 
 
 To get an initial grasp on our dataset and it's variables, we read this [kaggle-blog](https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning).
 Do note that this blog is about the math course, while we base our solution on the portugese one since it is the bigger dataset. 
