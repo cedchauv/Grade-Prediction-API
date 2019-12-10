@@ -109,12 +109,45 @@ While analyzing the dataset and after initial model training, we realised there 
 ```python
 df = df[df.G3 != 0]
 ```
-
-
-
 This leaves us with a processed dataset ready for use in our neural network!
 
 We do this two times to create a reduced-dataset for math and portugese that we use to train our webservice ai-model, and once to create a useable complete dataset file, where we don't run the code that removes columns.
+
+Now it's time for some dataset analysis. First we want to check the grade distribution (after G3 = 0 has been removed).
+```python
+plt.hist(df['G3'], label='portugese data')
+plt.hist(df2['G3'],label='math data')
+plt.title('Grade Distribution')
+plt.xlabel('G3 score')
+plt.ylabel('Amount of Students')
+plt.legend(loc='upper left')
+plt.show()
+```
+<img src="images/grades.jpg" alt="code" class="inline"/>
+
+Here we can both see how the portuguese dataset is bigger (almost double the size), but also how the math course has a lower grading average.
+
+Next we take a look at the correlation between the variables, paying most attention to the correlation with G3 since that is the result we want to predict. 
+```python
+plt.figure(figsize=(10,8))
+corr = abs(df3.corr())
+sns.heatmap(corr, square=True)
+plt.title('Correlation heatmap - Complete Dataset')
+plt.show()
+```
+<img src="images/complete%20heatmap.JPG" alt="plot" class="inline"/>
+
+We can see that G1 and G2 have high correlation with eachother and with G3, which is expected. We can also see an interesting, but irrelavant, correlation between parents' education level, and an expected correlation between weekday and weekend alcohol consumption. 
+Since some values have a negative correaltion (ex. failures), we will also take a look at an absolute heatmap to see which variables are strongest. 
+<img src="images/absolute%20heatmap.JPG" alt="plot" class="inline"/>
+
+Here we can see that outside of G1 and G2, failures, study time and whether they intend to pursue higher education had the highest impact on their grade, which makes perfect sense.
+
+Finally we check the correlation for the reduced dataset:
+<img src="images/reduced%20heatmap.JPG" alt="plot" class="inline"/>
+
+Here we see a slight problem for our prediction ability, since a lot of them aren't that impactful, and we lose some that had an impact, such as Mother's education (and G1/G2 of course). 
+
 
 ## Methodology:
 To provide this predictions we have chosen to use a deep neural network implenented with Keras. The neural network is trained and validatet using the dataset detailed above. It is a regression problem where the AI needs to produce a grade prediction on the scale 0-20. We are using the ReLu activation function, since it¨s a proven great choice for most neural nets. The output layer does use a linear activation functino however. We have tried both adam and rmsprop as optimizer functions and found adam to work best. For loss function we have tried: Mean absolute error, Mean Squared Error, Root Mean Squared Error and Mean Squared Logarithmic Error. We found the best result in using the mean squared error, probably because of its heavier penalization for larger errors.
