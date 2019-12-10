@@ -19,7 +19,7 @@ We will train two models, one using the complete dataset to achieve high accurac
 ## Dataset:
 The [dataset](https://www.kaggle.com/uciml/student-alcohol-consumption) being used to train the neural network to predict grades is a portugese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portugese-language students.
 
-The dataset contains 33 different variable columns, detailed below. Not all of these are useful for our web-service project though, since they cant be applied to higher education or outside of the dataset. The useful columns are in bold and the ones to be removed are in italics.<br/> 
+The dataset contains 33 different variable columns, detailed below. Not all of these are useful for our software engineering project though, since they cant be applied to higher education or outside of the dataset. The useful columns are in bold and the ones to be removed for the side project are in italics.<br/> 
 *school - student's school (binary: 'GP' - Gabriel Pereira or 'MS' - Mousinho da Silveira)<br/>* 
 **sex - student's sex (binary: 'F' - female or 'M' - male)<br/>
 age - student's age (numeric: from 15 to 22)<br/>
@@ -54,19 +54,56 @@ G1 - first period grade (numeric: from 0 to 20)<br/>
 G2 - second period grade (numeric: from 0 to 20)*<br/>
 **G3 - final grade (numeric: from 0 to 20, output target)**
 
-To be able to use this dataset with our neural network we have to do two things; Remove unnecessary columns, and replace non-integer values with binary integer values. 
+To be able to use this dataset with our neural network we have to replace non-integer values with binary integer values. So called label encoding. We achieve this with the help of pandas replace (example for complete dataset):
+```python
+import pandas as pd
 
-To be left with the useful columns, we run this code:
-<img src="images/training.JPG" alt="code" class="inline"/>
+df = pd.read_csv('./csv/student-por.csv')
+df.iloc[:,0] = df.iloc[:,0].replace('GP',0, regex=True)
+df.iloc[:,0] = df.iloc[:,0].replace('MS',1, regex=True)
+df.iloc[:,1] = df.iloc[:,1].replace('F',0,regex=True)
+df.iloc[:,1] = df.iloc[:,1].replace('M',1,regex=True)
+df.iloc[:,3] = df.iloc[:,3].replace('U',0,regex=True)
+df.iloc[:,3] = df.iloc[:,3].replace('R',1,regex=True)
+df.iloc[:,4] = df.iloc[:,4].replace('GT3',1, regex=True)
+df.iloc[:,4] = df.iloc[:,4].replace('LE3',0, regex=True)
+df.iloc[:,5] = df.iloc[:,5].replace('A',1, regex=True)
+df.iloc[:,5] = df.iloc[:,5].replace('T',0, regex=True)
+df.iloc[:,8] = df.iloc[:,8].replace('at_home',0, regex=True)
+df.iloc[:,8] = df.iloc[:,8].replace('health',1, regex=True)
+df.iloc[:,8] = df.iloc[:,8].replace('other',2, regex=True)
+df.iloc[:,8] = df.iloc[:,8].replace('services',3, regex=True)
+df.iloc[:,8] = df.iloc[:,8].replace('teacher',4, regex=True)
+df.iloc[:,9] = df.iloc[:,9].replace('at_home',0, regex=True)
+df.iloc[:,9] = df.iloc[:,9].replace('health',1, regex=True)
+df.iloc[:,9] = df.iloc[:,9].replace('other',2, regex=True)
+df.iloc[:,9] = df.iloc[:,9].replace('services',3, regex=True)
+df.iloc[:,9] = df.iloc[:,9].replace('teacher',4, regex=True)
+df.iloc[:,10] = df.iloc[:,10].replace('home',0, regex=True)
+df.iloc[:,10] = df.iloc[:,10].replace('course',1, regex=True)
+df.iloc[:,10] = df.iloc[:,10].replace('reputation',2, regex=True)
+df.iloc[:,10] = df.iloc[:,10].replace('other',3, regex=True)
+df.iloc[:,11] = df.iloc[:,11].replace('mother',0, regex=True)
+df.iloc[:,11] = df.iloc[:,11].replace('father',1, regex=True)
+df.iloc[:,11] = df.iloc[:,11].replace('other',2, regex=True)
+for x in range(15,23):
+    df.iloc[:,x] = df.iloc[:,x].replace('yes',1, regex=True)
+    df.iloc[:,x] = df.iloc[:,x].replace('no',0,regex=True)
+```
 
+To be left with the useful columns for the software engineering project, we also run this code:
+```python
+df1 = df[['sex','age','address','traveltime','studytime','failures','schoolsup','activities','internet','romantic',
+'freetime','goout','Dalc','Walc','health','G3']]
+```
+While analyzing the dataset and after initial model training, we realised there were students scoring 0 for some unforseen reason, considering they could have partial grades above a pass(10), we assume this is due to extraneous circumstances (i.e missing a final exam, cheating) and as such we discard these as the model can't predict outside of its data.
+```python
+df = df[df.G3 != 0]
+```
 
+This leaves us with a processed dataset ready for use in our neural network!
 
-To replace non-integer values with integer values, we run this:
-<img src="images/replace.JPG" alt="code" class="inline"/>
-
-These two together leaves us with a 'processed-tdata.csv' file that we can load with numpy and input to Keras!
-
-We do this two times to create a reduced-dataset for math and portugese that we use to train our webservice ai-model, and once to create a useable complete dataset file, where we don't run the code that removes columns, which we use to create a more accurate ai. 
+We do this two times to create a reduced-dataset for math and portugese that we use to train our webservice ai-model, and once to create a useable complete dataset file, where we don't run the code that removes columns.
 
 ## Methodology:
 - Explaining your choice of algorithms (methods)
