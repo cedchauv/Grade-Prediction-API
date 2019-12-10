@@ -176,10 +176,10 @@ model.add(Dense(40,activation='relu'))
 model.add(Dense(40,activation='relu'))
 model.add(Dense(1, activation='linear'))
 model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
-model.fit(x, y, epochs=720,batch_size=5)
+model.fit(x, y, epochs=400,batch_size=5)
 model.save('predictormodelComplete.h5')
 ```
-As mentioned above, we make use of mean squared error as loss function and adam as our optimizer. ReLu is used as an activation function for all layers except the final output one. We found that a batch size of 5 was a good tradeoff in training speed/accuracy and that epochs of ~700 worked fine to prevent overfitting with the complete and larger dataset. We make use of the 'variables' variable due to the shifting amounts of input depending on if we fit our complete or reduced dataset. 
+As mentioned above, we make use of mean squared error as loss function and adam as our optimizer. ReLu is used as an activation function for all layers except the final output one. We found that a batch size of 5 was a good tradeoff in training speed/accuracy and that epochs of ~400-450 worked fine to prevent overfitting with the complete and larger dataset. We make use of the 'variables' variable due to the shifting amounts of input depending on if we fit our complete or reduced dataset. 
 
 The split variable is used to split the dataset into training and testing/validation data. Split is used over keras `validation_split=0.xx` so we can see the average error (how far off the guesses are). We test our model through this code:
 ```python
@@ -205,10 +205,15 @@ print("Average error %.2f" % error)
 ```
 The predictions are made on the data saved through the earlier mentioned split variable. On our predictions we check how many we got exactly right and what percentage they make up, as well as the average error (calculated in the for loop and the directly following statement). This gives us an idea of how our model is performing. 
 ## Evaluation and Analysis:
-- Graphs, tables, any statistics (if any)
-
 To evaluate our neural net models we used multiple metrics, such as accuracy, average error and loss when predicting on the test data. 
-Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was ~48%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with.
+Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was around ~47%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with.
+Here is an example of a run instance:
+<img src="images/keras.JPG" alt="plot" class="inline"/>
+
+We can see that the training accuracy is at 81%, while the validation accuracy is roughly half at 42%, but that the average error is low at 0,7. In the top half of the picture we can see some of the predicted values on the left, and the actual values on the right. 
+
+<img src="images/accuracy%20400.JPG" alt="plot" class="inline"/>
+This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesnt reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement. 
 
 The study (presented below) achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers and considering their numbers for an "easier" problem we feel that our regression accuracy isn't too bad. 
 
@@ -224,5 +229,5 @@ Do note that this blog is about the math course, while we base our solution on t
 
 We made heavy use of the keras documentation, accessible [here](https://keras.io), and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
 ## Conclusion:
-
+AI is hard work, man.
 
