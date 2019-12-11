@@ -217,11 +217,20 @@ The predictions are made on the data saved through the earlier mentioned split v
 ## Evaluation and Analysis:
 To evaluate our neural net models we used multiple metrics, such as accuracy, average error and loss when predicting on the test data. 
 Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was around ~47%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with. It is possible (maybe even probable) that the data just isn't enough to actually get a good prediction, especially considering the study only managed to get 90% when dealing with pass/fail(10+ G3 being pass).
-Here is an example of a run instance, with `validation_split=0.20`:
+Here is an example of a run instance:
 <img src="images/keras.JPG" alt="plot" class="inline"/>
 
 We can see that the training accuracy is at 81%, while the validation accuracy is roughly half at 42%, but that the average error is low at 0,7. In the top half of the picture we can see some of the predicted values on the left, and the actual values on the right. 
-
+Here we plot an instance, with `validation_split=0.20`:
+```python
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()
+```
 <img src="images/accuracy%20400.JPG" alt="plot" class="inline"/>
 
 This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesn't reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement, even if it might be the start of overfitting. 
