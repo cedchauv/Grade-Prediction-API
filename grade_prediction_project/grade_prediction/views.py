@@ -107,12 +107,14 @@ def predict(request):
         improvements = Advisor.generate_improvement_list(data, 13 if prediction*5 < 65 else 17)
         filtered_improvements = []
         for improvement in improvements:
-            if improvement[1] != 0 and improvement[0] != "sex" and improvement[0] != "age" and improvement[0] != "failures" and improvement[0] != "schoolsup" and improvement[0] != "romantic" and improvement[0] != "health":
+            if improvement[1] != 0 and improvement[0] != "freetime" and improvement[0] != "sex" and improvement[0] != "age" and improvement[0] != "failures" and improvement[0] != "schoolsup" and improvement[0] != "romantic" and improvement[0] != "health":
                 filtered_improvements.append(improvement)
 
+        print(filtered_improvements)
+
         c['prediction'] = int(round(prediction[0][0] * 5))
-        c['improve_1'] = filtered_improvements[0][0]
-        c['improve_2'] = filtered_improvements[1][0]
-        c['improve_3'] = filtered_improvements[2][0]
+        c['improve_1'] = Advisor.advice_string(filtered_improvements[0][0]) + " There is a " + ("%.2f" % (abs(filtered_improvements[0][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[0][2] < 0 else "success.")
+        c['improve_2'] = Advisor.advice_string(filtered_improvements[1][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[1][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[1][2] < 0 else "success.")
+        c['improve_3'] = Advisor.advice_string(filtered_improvements[2][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[2][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[2][2] < 0 else "success.")
 
     return render(request, 'grade_prediction/predict.html', c)

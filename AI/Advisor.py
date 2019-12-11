@@ -27,52 +27,28 @@ class Transcript:
 
 def generate_improvement_list(student_profile, desired_grade):
     dataset = DataProcessor.get_dataset()
-    relevant_features = determine_attribute_weights(dataset)
+    relevant_features = determine_attribute_weights(dataset, absolute=False)
     print(relevant_features)
     collapsed_student_profile = collapse_attributes(student_profile.copy())
-    top_students = []
 
-    # compile list of students at or above desired grade threshold
-    for row in dataset:
-        if row[-1] >= desired_grade:
-            top_students.append(list(row[:-1]))
-
-    # determine student from list of top students that most closely matches the users profile
-    least_difference_score = -1
-    closest_match = []
-    for student in top_students:
-        difference = 0
-        collapsed_student = collapse_attributes(student.copy())
-        for i in range(len(collapsed_student)):
-            attribute_weight = relevant_features[convert_index_to_attribute_name(i)]
-            difference += abs(collapsed_student_profile[i] - collapsed_student[i]) * attribute_weight
-        if difference < least_difference_score or least_difference_score == -1:
-            least_difference_score = difference
-            closest_match = student
-
-    # create list of attributes to improve prioritized by attributes that differ the most
-    improvements = {}
-    collapsed_match = collapse_attributes(closest_match.copy())
     for i in range(len(collapsed_student_profile)):
-        attribute_weight = relevant_features[convert_index_to_attribute_name(i)]
-        difference = abs(collapsed_student_profile[i] - collapsed_match[i]) * attribute_weight
-        if difference not in improvements:
-            improvements[difference] = [i]
-        else:
-            improvements[difference].append(i)
+        if relevant_features[i] <= 0:
+            collapsed_student_profile[i] *= relevant_features[i]
+        elif relevant_features[i] > 0:
+            collapsed_student_profile[i] = (1 - collapsed_student_profile[i]) * relevant_features[i]
 
     improvement_list = []
-    for improvement in sorted(improvements):
-        for attribute in improvements[improvement]:
-            improvement_list.append([convert_index_to_attribute_name(attribute), improvement])
+    for i in range(len(collapsed_student_profile)):
+        if collapsed_student_profile[i] != 0:
+            improvement_list.append([convert_index_to_attribute_name(i), collapsed_student_profile[i], relevant_features[i]])
 
-    return sorted(improvement_list, key=lambda element: element[1], reverse=True)
+    return sorted(improvement_list, key=lambda element: abs(element[1]), reverse=True)
 
 
 def collapse_attributes(student_profile):
     student_profile[1] = (student_profile[1] - 15) / 7
-    student_profile[3] = (student_profile[3] - 1) / 4
-    student_profile[4] = (student_profile[4] - 1) / 4
+    student_profile[3] = (student_profile[3] - 1) / 3
+    student_profile[4] = (student_profile[4] - 1) / 3
     student_profile[5] = student_profile[5] / 4
     student_profile[10] = (student_profile[10] - 1) / 4
     student_profile[11] = (student_profile[11] - 1) / 4
@@ -115,12 +91,35 @@ def convert_index_to_attribute_name(index):
         return "health"
     if index == 15:
         return "G3"
+    
+def advice_string(attribute_name):
+    if attribute_name == "address":
+        return "Consider living in a rural environment."
+    if attribute_name == "traveltime":
+        return "Consider living closer to your campus or applying for on campus housing."
+    if attribute_name == "studytime":
+        return "You should spend some more time studying."
+    if attribute_name == "activities":
+        return "Take a look at some extra-curricular activities your school offers."
+    if attribute_name == "internet":
+        return "Ask your regional internet service provider about a plan."
+    if attribute_name == "goout":
+        return "Spend less time going out with friends. Try picking up a book or studying for your classes."
+    if attribute_name == "Dalc":
+        return "Drink less alcohol during the week. Alcohol can make it difficult to study and stay focused on school work."
+    if attribute_name == "Walc":
+        return "Drink less alcohol on the weekend. Alcohol can make it difficult to study and stay focused on school work."
+
+    return "Error"
 
 
-def determine_attribute_weights(dataset):
+def determine_attribute_weights(dataset, absolute=True):
     # calculate which attributes most affect final grade
     df = pd.DataFrame(dataset, columns=["sex", "age", "address", "traveltime", "studytime", "failures", "schoolsup", "activities", "internet", "romantic", "freetime", "goout", "Dalc", "Walc", "health", "G3"])
     cor = df.corr()
-    cor_target = abs(cor["G3"])
+    if absolute is True:
+        cor_target = abs(cor["G3"])
+    else:
+        cor_target = cor["G3"]
 
-    return cor_target[cor_target>=0.0]
+    return cor_target

@@ -43,15 +43,3 @@ def evaluate_dataset(model, dataset):
     labels = dataset[:,-1]
     _, accuracy = model.evaluate(data, labels)
     return accuracy
-
-
-def get_weights(model):
-    return 0
-
-def create_single_layer_model(num_variables):
-    model = Sequential()
-    model.add(Dense(1, activation='linear'))
-
-    model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
-
-    return model

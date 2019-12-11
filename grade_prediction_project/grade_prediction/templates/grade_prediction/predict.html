@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <body>
-    <h1>Grade prediction</h1>
+    <h1>Advisor</h1>
     {% if not prediction %}
     <p>
         Press the button to predict your grade
@@ -22,9 +22,9 @@
         Things to improve:
         <br>
         </p>
-        <div class="predict">
-            1. {{ improve_1 }}<br>
-            2. {{ improve_2 }}<br>
+        <div class="predict" style="text-align: left">
+            1. {{ improve_1 }}<br><br>
+            2. {{ improve_2 }}<br><br>
             3. {{ improve_3 }}
         </div>
     {% endif %}
