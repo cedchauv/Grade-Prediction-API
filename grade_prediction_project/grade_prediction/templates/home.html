@@ -9,15 +9,14 @@
 </head>
 <body class="home">
     {% if user.is_authenticated %}
-    <h1>Welcome back {{ request.user.username }}</h1>
+    <h1>Welcome {{ request.user.username }}</h1>
     {% else %}
     <h1>Index Page</h1>
     {% endif %}
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <p style="width: 70%; margin: auto">
+        We created this website to help you improve as a student. You can predict your grade by creating a profile and
+        filling in the profile data. After you filled in the profile data and predicted your grade our AI will also tell
+        in what areas you can improve the most.
     </p>
 </body>
 </html>
