@@ -11,19 +11,29 @@ Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
 
 ### Table of Contents
 - [Introduction](https://cedchauv.github.io/Grade-Prediction-API/#introduction)
+- [Related Work](https://cedchauv.github.io/Grade-Prediction-API/#related-work)
 - [Dataset](https://cedchauv.github.io/Grade-Prediction-API/#dataset)
 - [Methodology](https://cedchauv.github.io/Grade-Prediction-API/#methodology)
 - [Evaluation and Analysis](https://cedchauv.github.io/Grade-Prediction-API/#evaluation-and-analysis)
-- [Related Work](https://cedchauv.github.io/Grade-Prediction-API/#related-work)
 - [Conclusion](https://cedchauv.github.io/Grade-Prediction-API/#conclusion)
 
 ## Introduction:
 As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
 
-In the end, we want to have a trained ai model, capable of producing accurate predictions based on the variables input into the ai. We want these predictions to be accessible through a web-service connected to a database. We also want functions for the continued training of the ai from user-input, such as transcripts and student results/variables. Our main model will be a neural network utilizing Keras. 
+In the end we want to have a trained ai model, capable of producing accurate predictions based on the variables input into the ai. We want these predictions to be accessible through a web-service connected to a database. We also want functions for the continued training of the ai from user-input, such as transcripts and student results/variables. Our main model will be a neural network utilizing Keras. 
 
 We will train two models, one using the complete dataset to achieve high accuracy, and one using the reduced dataset (detailed below) since the complete dataset doesn't fit our service (some variables are unavailable for our proposed users).
 
+## Related Work:
+The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
+They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output, which gives us some metrics to compare to.
+
+This project makes use of multiple frameworks and libraries. We are using Keras/Tensorflow/Numpy as our required backbone and Pandas/Matplotlib/Pyplot/Seaborn for our data processing and analyzing. 
+
+To get an initial grasp on our dataset and it's variables, we read this [kaggle-blog](https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning).
+Do note that this blog is about the math course, while we base our solution on the portuguese one since it is the bigger dataset. 
+
+We made heavy use of the keras documentation, accessible [here](https://keras.io), and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc.
 
 ## Dataset:
 The [dataset](https://www.kaggle.com/uciml/student-alcohol-consumption) being used to train the neural network to predict grades is a Portuguese survey-based grade dataset where grades and multiple variables are reported for 386 math students and 649 portuguese-language students.
@@ -206,7 +216,7 @@ print("Average error %.2f" % error)
 The predictions are made on the data saved through the earlier mentioned split variable. On our predictions we check how many we got exactly right and what percentage they make up, as well as the average error (calculated in the for loop and the directly following statement). This gives us an idea of how our model is performing. 
 ## Evaluation and Analysis:
 To evaluate our neural net models we used multiple metrics, such as accuracy, average error and loss when predicting on the test data. 
-Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was around ~47%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with.
+Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was around ~47%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with. It is possible (maybe even probable) that the data just isn't enough to actually get a good prediction, especially considering the study below only managed to get 90% when dealing with pass/fail(10+ G3 being pass).
 Here is an example of a run instance, with `validation_split=0.20`:
 <img src="images/keras.JPG" alt="plot" class="inline"/>
 
@@ -214,21 +224,10 @@ We can see that the training accuracy is at 81%, while the validation accuracy i
 
 <img src="images/accuracy%20400.JPG" alt="plot" class="inline"/>
 
-This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesn't reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement. 
+This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesn't reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement, even if it might be the start of overfitting. 
 
-The study (presented below) achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers and considering their numbers for an "easier" problem we feel that our regression accuracy isn't too bad. 
-
-
-## Related Work:
-The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
-They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output, which gives us some metrics to compare to.
-
-This project makes use of multiple frameworks and libraries. We are using Keras/Tensorflow/Numpy as our required backbone and Pandas/Matplotlib/Pyplot/Seaborn for our data processing and analyzing. 
-
-To get an initial grasp on our dataset and it's variables, we read this [kaggle-blog](https://www.kaggle.com/dipam7/introduction-to-eda-and-machine-learning).
-Do note that this blog is about the math course, while we base our solution on the portuguese one since it is the bigger dataset. 
-
-We made heavy use of the keras documentation, accessible [here](https://keras.io), and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
+The study mentioned in the beginning achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers and considering their numbers for an "easier" problem we feel that our regression accuracy isn't too bad. 
+ 
 ## Conclusion:
 With this project we have built, trained and tested a neural network on a student dataset, with the intention of predicting grades. We've also analyzed the dataset and the model itself. We found that predicting grades without the partial grades was a lot harder (of course) but would be the more useful ai by far, since a grade prediction after most of the semester is not nearly as useful. For our Software Engineering project, a pre-course prediction was our goal, so we removed these and the accuracy heavily suffered. The correlation values also helped us build an advisor function for the SE project. 
 
