@@ -207,21 +207,21 @@ The predictions are made on the data saved through the earlier mentioned split v
 ## Evaluation and Analysis:
 To evaluate our neural net models we used multiple metrics, such as accuracy, average error and loss when predicting on the test data. 
 Some statistics are shown below. The highest accuracy we achieved on our test set of ~120 with the complete dataset (all columns) was around ~47%. While with the reduced dataset we achieved a high of ~18%. It is unclear what the potential highest accuracy is, and how close we are to reaching it / how well our model actually is performing considering the data is has to work with.
-Here is an example of a run instance:
+Here is an example of a run instance, with `validation_split=0.20`:
 <img src="images/keras.JPG" alt="plot" class="inline"/>
 
 We can see that the training accuracy is at 81%, while the validation accuracy is roughly half at 42%, but that the average error is low at 0,7. In the top half of the picture we can see some of the predicted values on the left, and the actual values on the right. 
 
 <img src="images/accuracy%20400.JPG" alt="plot" class="inline"/>
 
-This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesnt reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement. 
+This graph shows the accuracy on training and validation data as it's being trained. We can see that while accuracy for testing doesn't reach higher after the initial bump, it does become more stable while not decreasing, which we see as an improvement. 
 
 The study (presented below) achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers and considering their numbers for an "easier" problem we feel that our regression accuracy isn't too bad. 
 
 
 ## Related Work:
 The dataset we are using for this project is attached to the research paper [*"Using Data Mining to Predict Secondary School Student Performance"*](https://repositorium.sdum.uminho.pt/handle/1822/8024) , where researchers used data from secondary school students in Portugal to learn what factors affect students’ performance.
-They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model, but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output, which gives us some metrics to compare to.
+They applied different types of ai models, such as Neural Nets, Decision Trees and Random Forests and compared their accuracy and error rate with different output (pass/fail, A-F,0-20). Their neural net was the worst performing model but managed to score a 90.7% and 65.1% accuracy for the first two outputs, and a root mean square error of 1.36 for the regression output, which gives us some metrics to compare to.
 
 This project makes use of multiple frameworks and libraries. We are using Keras/Tensorflow/Numpy as our required backbone and Pandas/Matplotlib/Pyplot/Seaborn for our data processing and analyzing. 
 
@@ -230,8 +230,8 @@ Do note that this blog is about the math course, while we base our solution on t
 
 We made heavy use of the keras documentation, accessible [here](https://keras.io), and tech blogs such as Medium to research how to build an optimal neural network- This included reading up about loss-functions, optimizers, etc. 
 ## Conclusion:
-With this project we have built, trained and tested a neural network on a student dataset, with the intention of predicting grades. We've also analyzed the dataset and the model itself. We found that predicting grades without the partial grades was a lot harder (of course) but would be the more useful ai by far, since a grade prediction after most of the semester is not nearly as useful. For our Software Engineering project, a pre-course prediction was our goal so we removed these and the accuracy heavily suffered. The correlation values also helped us build an advisor function for the SE project. 
+With this project we have built, trained and tested a neural network on a student dataset, with the intention of predicting grades. We've also analyzed the dataset and the model itself. We found that predicting grades without the partial grades was a lot harder (of course) but would be the more useful ai by far, since a grade prediction after most of the semester is not nearly as useful. For our Software Engineering project, a pre-course prediction was our goal, so we removed these and the accuracy heavily suffered. The correlation values also helped us build an advisor function for the SE project. 
 
-In the end, we've learned the basics of neural networks and it's functinos, predictions, and data analyzing/manipulation. Tuning the AI has been a challenge due to how complex a neural network really is, with parts not fully understood and the general feeling of inputting into a black box where "something" happens - and hoping it matches up. We've also gotten an understanding of the challenges with data(For example, our dataset is lacking when it comes to predictions without G1 and G2), and the intense computational load(and time) training a neural net involves.
+In the end, we've learned the basics of neural networks and it's functions, predictions, and data analyzing/manipulation. Tuning the AI has been a challenge due to how complex a neural network really is, with parts not fully understood and the general feeling of inputting into a black box where "something" happens - and hoping it matches up. We've also gotten an understanding of the challenges with data(For example, our dataset is lacking when it comes to predictions without G1 and G2), and the intense computational load(and time) training a neural net involves.
 
 
