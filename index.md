@@ -20,7 +20,7 @@ Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
 ## Introduction:
 As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
 
-In the end we want to have a trained ai model, capable of producing accurate predictions based on the variables input into the ai. We want these predictions to be accessible through a web-service connected to a database. We also want functions for the continued training of the ai from user-input, such as transcripts and student results/variables. Our main model will be a neural network utilizing Keras. 
+In the end we want to have a trained AI model, capable of producing accurate predictions based on the variables input into the AI. We want these predictions to be accessible through a web-service connected to a database. We also want functions for the continued training of the AI from user-input, such as transcripts and student results/variables. Our main model will be a neural network utilizing Keras. 
 
 We will train two models, one using the complete dataset to achieve high accuracy, and one using the reduced dataset (detailed below) since the complete dataset doesn't fit our service (some variables are unavailable for our proposed users).
 
@@ -121,7 +121,7 @@ df = df[df.G3 != 0]
 ```
 This leaves us with a processed dataset ready for use in our neural network!
 
-We do this two times to create a reduced-dataset for math and portuguese that we use to train our webservice ai-model, and once to create a useable complete dataset file, where we don't run the code that removes columns.
+We do this two times to create a reduced-dataset for math and portuguese that we use to train our webservice AI-model, and once to create a useable complete dataset file, where we don't run the code that removes columns.
 
 Now it's time for some dataset analysis. First we want to check the grade distribution (after G3 = 0 has been removed).
 ```python
@@ -238,8 +238,11 @@ This graph shows the accuracy on training and validation data as it's being trai
 The study mentioned in the beginning achieved an accuracy of ~65% using the complete dataset, and ~34% without G1 and G2 (so more variables than our reduced data). This however was as a five-level classification (where 0-9,10-11,12-13,14-15, and 16-20 are grouped) prediction and not a straight regression one. They do not provide accuracy for regression, only loss (using another loss function than we are). But it still gives us some reference numbers and considering their numbers for an "easier" problem we feel that our regression accuracy isn't too bad. 
  
 ## Conclusion:
-With this project we have built, trained and tested a neural network on a student dataset, with the intention of predicting grades. We've also analyzed the dataset and the model itself. We found that predicting grades without the partial grades was a lot harder (of course) but would be the more useful ai by far, since a grade prediction after most of the semester is not nearly as useful. For our Software Engineering project, a pre-course prediction was our goal, so we removed these and the accuracy heavily suffered. The correlation values also helped us build an advisor function for the SE project. 
+With this project we have built, trained and tested a neural network on a student dataset, with the intention of predicting grades. We've also analyzed the dataset and the model itself. We found that predicting grades without the partial grades was a lot harder (of course) but would be the more useful AI by far, since a grade prediction after most of the semester is not nearly as useful. For our Software Engineering project, a pre-course prediction was our goal, so we removed these and the accuracy heavily suffered. The correlation values also helped us build an advisor function for the SE project. 
+
+One of our primary sources of confusion has been the dataset, partly us doubting how good it is for accurate predicions, but also an unavoidable part of using third-party sources - the ambiguity. We can't be sure exactly what each variable means, or how the study gathering it was conducted. For example we have as a group debated the variable "freetime" and exactly what it means, is studytime included in it? This is an example of a relevant question (for the SE advisor specificially), that we simply can't answer.
 
 In the end, we've learned the basics of neural networks and it's functions, predictions, and data analyzing/manipulation. Tuning the AI has been a challenge due to how complex a neural network really is, with parts not fully understood and the general feeling of inputting into a black box where "something" happens - and hoping it matches up. We've also gotten an understanding of the challenges with data(For example, our dataset is lacking when it comes to predictions without G1 and G2), and the intense computational load(and time) training a neural net involves.
+
 
 
