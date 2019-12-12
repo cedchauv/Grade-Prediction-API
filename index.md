@@ -17,6 +17,9 @@ Emyl van der Kooi, Department of Nuclear Engineering, Hanyang University
 - [Evaluation and Analysis](https://cedchauv.github.io/Grade-Prediction-API/#evaluation-and-analysis)
 - [Conclusion](https://cedchauv.github.io/Grade-Prediction-API/#conclusion)
 
+### Video
+[![Video](https://img.youtube.com/vi/FDTbtegCGp4/0.jpg)](https://www.youtube.com/watch?v=FDTbtegCGp4)
+
 ## Introduction:
 As students, we wanted to create something that was relevant to us that also made use of artificial intelligence. One of the most known websites among students is Rate My Professor. We wanted to create something similar; however, instead of using a professor rating to determine how well you would perform in a class, you can use our website to determine a grade based on factors such as study time per week, internet access, home location, and more. These predictions can  be used by students to advise them on how to excel and help universities advise and design a curriculum that accommodates their students.
 
