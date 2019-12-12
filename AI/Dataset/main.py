@@ -1,9 +1,9 @@
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
-
+from matplotlib import pyplot as plt
 dataset = np.loadtxt('./csv/complete-processed.csv', delimiter=',',skiprows=1)
-split = 130
+split = 1
 #15 reduced, 32 complete
 variables = 32
 
@@ -24,8 +24,16 @@ model.add(Dense(1, activation='linear'))
 
 model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
 
-model.fit(x, y, epochs=720,batch_size=5)
+history = model.fit(x, y, epochs=400,batch_size=5, validation_split=0.20)
 model.save('predictormodelComplete.h5')
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()
 
 a = dataset[-split:,0:variables]
 b = dataset[-split:,variables]
