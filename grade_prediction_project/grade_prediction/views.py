@@ -110,11 +110,16 @@ def predict(request):
             if improvement[1] != 0 and improvement[0] != "freetime" and improvement[0] != "sex" and improvement[0] != "age" and improvement[0] != "failures" and improvement[0] != "schoolsup" and improvement[0] != "romantic" and improvement[0] != "health":
                 filtered_improvements.append(improvement)
 
+
         print(filtered_improvements)
 
-        c['prediction'] = int(round(prediction[0][0] * 5))
-        c['improve_1'] = Advisor.advice_string(filtered_improvements[0][0]) + " There is a " + ("%.2f" % (abs(filtered_improvements[0][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[0][2] < 0 else "success.")
-        c['improve_2'] = Advisor.advice_string(filtered_improvements[1][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[1][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[1][2] < 0 else "success.")
-        c['improve_3'] = Advisor.advice_string(filtered_improvements[2][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[2][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[2][2] < 0 else "success.")
+        c['prediction'] = int(min(round(prediction[0][0] * 5), 95))
+        
+        if len(filtered_improvements) >= 1:
+            c['improve_1'] = Advisor.advice_string(filtered_improvements[0][0]) + " There is a " + ("%.2f" % (abs(filtered_improvements[0][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[0][2] < 0 else "success.")
+        if len(filtered_improvements) >= 2:
+            c['improve_2'] = Advisor.advice_string(filtered_improvements[1][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[1][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[1][2] < 0 else "success.")
+        if len(filtered_improvements) >= 3:
+            c['improve_3'] = Advisor.advice_string(filtered_improvements[2][0]) + " There is a " + ("%.2f" % abs((filtered_improvements[2][2]) * 100)) + "% correlation with " + ("failure." if filtered_improvements[2][2] < 0 else "success.")
 
     return render(request, 'grade_prediction/predict.html', c)
