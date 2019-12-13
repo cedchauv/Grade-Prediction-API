@@ -192,6 +192,8 @@ model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
 model.fit(x, y, epochs=400,batch_size=5)
 model.save('predictormodelComplete.h5')
 ```
+Running the code above and fitting the model takes about a minute and ten seconds, using a Win10 Laptop with a i5-6300HQ CPU @ 2.30GHz running at 60-70% load. Wtih 1000 epochs(too much), the time jumps to about 2 minutes and 40 seconds, so training the model is pretty fast.
+
 As mentioned above, we make use of mean squared error as loss function and adam as our optimizer. ReLu is used as an activation function for all layers except the final output one. We found that a batch size of 5 was a good tradeoff in training speed/accuracy and that epochs of ~400-450 worked fine to prevent overfitting with the complete and larger dataset. We make use of the 'variables' variable due to the shifting amounts of input depending on if we fit our complete or reduced dataset. 
 
 The split variable is used to split the dataset into training and testing/validation data. Split is used over keras `validation_split=0.xx` so we can see the average error (how far off the guesses are). We test our model through this code:
